@@ -3,28 +3,29 @@ package com.mygdx.game.WorldBuilding;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Layer;
+import com.mygdx.game.Exceptions.InvalidAnchor32Exception;
+import com.mygdx.game.Map.Map;
+import com.mygdx.game.Map.Tile;
 import com.mygdx.game.Vector2Int;
 
 public class UserInputWB implements InputProcessor
 {
 
 
-    public UserInputWB(Camera cam, Layer targetLayer, String targetTexturePath)
+    public UserInputWB(OrthographicCamera cam, Map targetMap, String targetTexturePath)
     {
         super();
         this.cam = cam;
-        this.targetLayer = targetLayer;
+        this.targetMap = targetMap;
         this.targetTexturePath = targetTexturePath;
 
         update();
     }
 
-    private Camera cam;
-    private Layer targetLayer;
+    private OrthographicCamera cam;
+    private Map targetMap;
     private String targetTexturePath;
 
     private boolean isHeldDown_W;
@@ -47,6 +48,55 @@ public class UserInputWB implements InputProcessor
         cam.update();
     }
 
+    @Override
+    public boolean touchDown(int x, int y, int pointer, int button)
+    {
+        touchDownLMB(x,y,button);
+        touchDownRMB(x,y,button);
+        return false;
+    }
+
+    private void touchDownLMB(int x, int y, int button)
+    {
+        if (button == Input.Buttons.LEFT)
+        {
+            Vector3 v3 =  cam.unproject(new Vector3(x, y, 0));
+            Vector2Int v2 = new Vector2Int((int)v3.x,(int)v3.y);
+            int xOver;
+            if(v2.x>0)
+            {
+                xOver  = v2.x%32;
+            }
+            else
+            {
+                xOver  = (v2.x%32)+32;
+            }
+            int yOver;
+            if(v2.y>0)
+            {
+                yOver  = v2.y%32;
+            }
+            else
+            {
+                yOver  = (v2.y%32)+32;
+            }
+            try
+            {
+                targetMap.add(new Tile(0), new Vector2Int(v2.x - xOver, v2.y - yOver));
+            }
+            catch (InvalidAnchor32Exception e)
+            {
+                System.out.println("error2");
+            }
+        }
+    }
+    private void touchDownRMB(int x, int y, int button)
+    {
+        if (button == Input.Buttons.RIGHT)
+        {
+
+        }
+    }
 
 
     @Override
@@ -75,36 +125,7 @@ public class UserInputWB implements InputProcessor
         return false;
     }
 
-    @Override
-    public boolean touchDown(int x, int y, int pointer, int button)
-    {
-        if (button == Input.Buttons.LEFT)
-        {
-            Vector3 v3 =  cam.unproject(new Vector3(x, y, 0));
-            Vector2Int v2 = new Vector2Int((int)v3.x,(int)v3.y);
-            int xOver;
-            if(v2.x>0)
-            {
-                xOver  = v2.x%32;
-            }
-            else
-            {
-                xOver  = (v2.x%32)+32;
-            }
-            int yOver;
-            if(v2.y>0)
-            {
-                yOver  = v2.y%32;
-            }
-            else
-            {
-                yOver  = (v2.y%32)+32;
-            }
-            System.out.println(xOver+ "                  "+yOver);
-            targetLayer.add(new Texture(targetTexturePath),v2.x-xOver,v2.y-yOver);
-        }
-        return false;
-    }
+
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button)
@@ -127,6 +148,14 @@ public class UserInputWB implements InputProcessor
     @Override
     public boolean scrolled(float amountX, float amountY)
     {
-        return false;
+        if(amountY>0)
+        {
+            cam.zoom*=1.1;
+        }
+        else
+        {
+            cam.zoom*=0.9;
+        }
+        return true;
     }
 }

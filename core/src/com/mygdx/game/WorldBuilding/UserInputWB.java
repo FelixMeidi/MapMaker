@@ -82,11 +82,13 @@ public class UserInputWB implements InputProcessor
             }
             try
             {
-                targetMap.add(new Tile(0), new Vector2Int(v2.x - xOver, v2.y - yOver));
+              //  targetMap.add(new Tile(0), new Vector2Int(v2.x - xOver, v2.y - yOver));
+
+                targetMap.add(new Tile(0), new Vector2Int(0, 0));
             }
             catch (InvalidAnchor32Exception e)
             {
-                System.out.println("error2");
+                System.out.println(e.getMessage());
             }
         }
     }

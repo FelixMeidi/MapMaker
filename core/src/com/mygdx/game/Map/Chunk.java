@@ -46,12 +46,9 @@ public class Chunk extends Drawable
             {
                 if(tiles[c1][c2]!=null)
                 {
-
                     TextureRegion r = tiles[c1][c2].getTextureRegion();
-                    System.out.println("test");
                     Vector2Int32 globalAnchor = rootMap.convertAnchor32LocalToGlobal(anchor32Local);
                     batch.draw(r, globalAnchor.getX() + c1 + c2, globalAnchor.getY() + c1 + c2, r.getRegionWidth(), r.getRegionHeight());
-
                 }
             }
         }

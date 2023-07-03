@@ -37,10 +37,12 @@ public class Layer
 */
             map.draw(batch);
 
-        }catch (NullPointerException e)
+        }
+        catch (NullPointerException e)
         {
-            System.out.println("error");
-        }finally
+            System.out.println(e.getMessage());
+        }
+        finally
         {
             batch.flush();
         }

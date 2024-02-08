@@ -35,7 +35,14 @@ public class Layer
             TextureRegion r = TextureLoader.get(1);
             batch.draw(r, 0,0, r.getRegionWidth(), r.getRegionHeight());
 */
-            map.draw(batch);
+            try
+            {
+                map.draw(batch);
+            }
+            catch (Exception e)
+            {
+                System.out.println("this shouldnt happen");
+            }
 
         }
         catch (NullPointerException e)

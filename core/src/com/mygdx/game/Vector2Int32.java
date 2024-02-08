@@ -1,63 +1,50 @@
 package com.mygdx.game;
 
-import com.mygdx.game.Exceptions.InvalidAnchor32Exception;
+import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 
-public class Vector2Int32
+public class Vector2Int32 extends Vector2Int
 {
-    public Vector2Int32(int x, int y) throws InvalidAnchor32Exception
+
+    //init
+
+    public Vector2Int32(int x, int y) throws InvalidVector2Int32Exception
     {
-        if(x%32!=0) throw new InvalidAnchor32Exception();
-        if(y%32!=0) throw new InvalidAnchor32Exception();
-        this.x = x;
-        this.y = y;
+        super(x,y);
+        if(x%32!=0||y%32!=0) throw new InvalidVector2Int32Exception(x,y);
     }
     public Vector2Int32()
     {
-        this.x = 0;
-        this.y = 0;
+        super();
     }
 
-    private int x;
-    public int getX()
+
+    //functions
+
+
+    public Vector2Int32 addEquals(Vector2Int32 v2fl) throws InvalidVector2Int32Exception
     {
-        return x;
-    }
-    public void setX(int x) throws InvalidAnchor32Exception
-    {
-        if(x%32!=0) throw new InvalidAnchor32Exception();
-        this.x = x;
+        return new Vector2Int32(x+ v2fl.x,y+ v2fl.y);
     }
 
-    private int y;
-    public int getY()
+    public Vector2Int32 abs32() throws InvalidVector2Int32Exception
     {
-        return y;
-    }
-    public void setY(int y)  throws InvalidAnchor32Exception
-    {
-        if(y%32!=0) throw new InvalidAnchor32Exception();
-        this.y = y;
-    }
-    public Vector2Int32 add(Vector2Int32 vectorToAdd)
-    {
-        int newx = x+ vectorToAdd.getX();
-        int newy = y+ vectorToAdd.getY();
         try
         {
-            return new Vector2Int32(newx,newy);
+            Vector2Int32 v = new Vector2Int32(x, y);
+            if (v.x < 0)
+            {
+                v.x = -v.x;
+            }
+            if (v.y < 0)
+            {
+                v.y = -v.y;
+            }
+            return v;
         }
-        catch (InvalidAnchor32Exception e)
+        catch (Exception e)
         {
-            System.out.println("What happened?");
+
         }
         return null;
-    }
-
-
-
-    public boolean isZero()
-    {
-        if(x==0&&y==0) return true;
-        return false;
     }
 }

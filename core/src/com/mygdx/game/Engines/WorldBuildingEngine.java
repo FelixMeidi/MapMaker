@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Engines.Engine;
 import com.mygdx.game.Layer;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Textures.TextureLoader;
@@ -47,13 +46,24 @@ public class WorldBuildingEngine extends ApplicationAdapter
 
     public void init()
     {
+        initAlways();
+        initTemp();
+    }
+
+    private void initTemp()
+    {
+
+    }
+    private void initAlways()
+    {
         TextureLoader.loadTextures();
         cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Map m = new Map();
+
         l1 = new Layer(cam,m);
-        cam.zoom=1f;
+        cam.zoom=0.5f;
         cam.update();
-        userin = new UserInputWB(cam, m, "32x32/CobbleStoneStreet.png");
+        userin = new UserInputWB(cam, m);
         Gdx.input.setInputProcessor(userin);
     }
 }

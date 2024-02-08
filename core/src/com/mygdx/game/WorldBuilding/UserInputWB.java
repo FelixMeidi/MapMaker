@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Exceptions.InvalidAnchor32Exception;
+import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
 import com.mygdx.game.Vector2Int;
@@ -13,26 +13,33 @@ import com.mygdx.game.Vector2Int;
 public class UserInputWB implements InputProcessor
 {
 
+    //region init
 
-    public UserInputWB(OrthographicCamera cam, Map targetMap, String targetTexturePath)
+    public UserInputWB(OrthographicCamera cam, Map targetMap)
     {
         super();
         this.cam = cam;
         this.targetMap = targetMap;
-        this.targetTexturePath = targetTexturePath;
 
         update();
     }
 
-    private OrthographicCamera cam;
-    private Map targetMap;
-    private String targetTexturePath;
+    //endregion init
 
+
+    //region members
+
+    private final OrthographicCamera cam;
+    private final Map targetMap;
     private boolean isHeldDown_W;
     private boolean isHeldDown_S;
     private boolean isHeldDown_A;
     private boolean isHeldDown_D;
 
+    //endregion members
+
+
+    //region functions
 
     public void update()
     {
@@ -51,8 +58,8 @@ public class UserInputWB implements InputProcessor
     @Override
     public boolean touchDown(int x, int y, int pointer, int button)
     {
-        touchDownLMB(x,y,button);
-        touchDownRMB(x,y,button);
+        touchDownLMB(x, y, button);
+        touchDownRMB(x, y, button);
         return false;
     }
 
@@ -60,42 +67,37 @@ public class UserInputWB implements InputProcessor
     {
         if (button == Input.Buttons.LEFT)
         {
-            Vector3 v3 =  cam.unproject(new Vector3(x, y, 0));
-            Vector2Int v2 = new Vector2Int((int)v3.x,(int)v3.y);
-            int xOver;
-            if(v2.x>0)
+
+            Vector3 v3 = cam.unproject(new Vector3(x, y, 0));
+
+            Vector2Int v2 = new Vector2Int((int) v3.x, (int) v3.y);
+
+            int xOver = 0;
+            if (v2.getX() < 0)
             {
-                xOver  = v2.x%32;
+                xOver = (v2.getX() % 32)+32;
             }
-            else
+
+            int yOver = 0;
+            if (v2.getY() < 0)
             {
-                xOver  = (v2.x%32)+32;
+                yOver = (v2.getY() % 32)+32;
             }
-            int yOver;
-            if(v2.y>0)
-            {
-                yOver  = v2.y%32;
-            }
-            else
-            {
-                yOver  = (v2.y%32)+32;
-            }
+
+
+            Vector2Int vfinal = new Vector2Int(v2.getX()-xOver, v2.getY()-yOver);
+
+
             try
             {
-              //  targetMap.add(new Tile(0), new Vector2Int(v2.x - xOver, v2.y - yOver));
-
-                targetMap.add(new Tile(0), new Vector2Int(0, 0));
+                targetMap.add(new Tile(0), vfinal);
             }
-            catch (InvalidAnchor32Exception e)
+            catch (InvalidVector2Int32Exception e)
             {
+                e.addMessage("UserInputWB,touchDownLMB:");
                 System.out.println(e.getMessage());
             }
-        }
-    }
-    private void touchDownRMB(int x, int y, int button)
-    {
-        if (button == Input.Buttons.RIGHT)
-        {
+
 
         }
     }
@@ -104,29 +106,44 @@ public class UserInputWB implements InputProcessor
     @Override
     public boolean keyDown(int keycode)
     {
-        if (keycode==Input.Keys.W) isHeldDown_W = true;
-        if (keycode==Input.Keys.S) isHeldDown_S = true;
-        if (keycode==Input.Keys.A) isHeldDown_A = true;
-        if (keycode==Input.Keys.D) isHeldDown_D = true;
+        if (keycode == Input.Keys.W) isHeldDown_W = true;
+        if (keycode == Input.Keys.S) isHeldDown_S = true;
+        if (keycode == Input.Keys.A) isHeldDown_A = true;
+        if (keycode == Input.Keys.D) isHeldDown_D = true;
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode)
     {
-        if (keycode==Input.Keys.W) isHeldDown_W = false;
-        if (keycode==Input.Keys.S) isHeldDown_S = false;
-        if (keycode==Input.Keys.A) isHeldDown_A = false;
-        if (keycode==Input.Keys.D) isHeldDown_D = false;
+        if (keycode == Input.Keys.W) isHeldDown_W = false;
+        if (keycode == Input.Keys.S) isHeldDown_S = false;
+        if (keycode == Input.Keys.A) isHeldDown_A = false;
+        if (keycode == Input.Keys.D) isHeldDown_D = false;
         return false;
     }
 
+
     @Override
+    public boolean scrolled(float amountX, float amountY)
+    {
+        if (amountY > 0)
+        {
+            cam.zoom *= 1.1;
+        }
+        else
+        {
+            cam.zoom *= 0.9;
+        }
+        return true;
+    }
+
+    //region notInUse
+
     public boolean keyTyped(char character)
     {
         return false;
     }
-
 
 
     @Override
@@ -147,17 +164,16 @@ public class UserInputWB implements InputProcessor
         return false;
     }
 
-    @Override
-    public boolean scrolled(float amountX, float amountY)
+    private void touchDownRMB(int x, int y, int button)
     {
-        if(amountY>0)
+        if (button == Input.Buttons.RIGHT)
         {
-            cam.zoom*=1.1;
+
         }
-        else
-        {
-            cam.zoom*=0.9;
-        }
-        return true;
     }
+
+    //endregion notInUse
+
+
+    //endregion functions
 }

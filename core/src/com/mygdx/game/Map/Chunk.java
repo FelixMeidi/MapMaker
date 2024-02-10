@@ -33,14 +33,14 @@ public class Chunk
     public void draw(SpriteBatch batch,Vector2Int offset)
     {
         TextureRegion r;
-        for (int c1 = 0; c1 < 32; c1++)
+        for (int c1 = 0; c1 < tiles.length; c1++)
         {
-            for (int c2 = 0; c2 < 32; c2++)
+            for (int c2 = 0; c2 < tiles.length; c2++)
             {
                 if(tiles[c1][c2]!=null)
                 {
                     r = tiles[c1][c2].getTextureRegion();
-                    batch.draw(r, offset.getX() + c1*32, offset.getY() + c2*32, r.getRegionWidth(), r.getRegionHeight());
+                    batch.draw(r, offset.getX() + (c1*32), offset.getY() + (c2*32), r.getRegionWidth(), r.getRegionHeight());
                 }
             }
         }

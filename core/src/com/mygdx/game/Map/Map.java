@@ -1,6 +1,7 @@
 package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
 import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 
 import com.mygdx.game.Vector2Int;
@@ -25,15 +26,14 @@ public class Map
     {
         mapChunkLists2D = new ArrayList<>();
         anchor = new Vector2Int1024();
-        testcount = 0;
     }
 
-    public void add(Tile t, Vector2Int targetCords) throws InvalidVector2Int32Exception
+    public void add(Tile t, Vector2Int targetCords) throws InvalidVector2Int32Exception, InvalidVector2Int1024Exception
     {
 
         //get chunk coordinates
 
-        Vector2Int32 chunk = new Vector2Int32(targetCords.getX() - (targetCords.getX() % 1024),targetCords.getY() - (targetCords.getY() % 1024));
+        Vector2Int1024 chunk = new Vector2Int1024(targetCords.getX() - (targetCords.getX() % 1024),targetCords.getY() - (targetCords.getY() % 1024));
 
         if(targetCords.getX()<0)
         {
@@ -43,7 +43,8 @@ public class Map
         {
             chunk.setY(chunk.getY()-1024);
         }
-        //change anchor if needed
+
+        //region change anchor
         Vector2Int32 offsetVector = null;
         try
         {
@@ -67,10 +68,11 @@ public class Map
             e.addMessage("Map,changeAnchor:");
             throw e;
         }
+        //endregion change anchor
 
         Vector2Int anchorIndex = anchor.divideBy1024eq();
         anchorIndex = anchorIndex.abs();
-
+//
         Vector2Int realChunkIndex = anchorIndex.addEquals(chunk.divideBy1024eq());
 
 
@@ -99,31 +101,37 @@ public class Map
             }
         }
 
+//this fucking error
 
 
-
-        Vector2Int arrayIndex = new Vector2Int(targetCords.getX()/32, targetCords.getY()/32);
-        System.out.println("1:                 "+targetCords.getX()+"   "+ targetCords.getY());
+        Vector2Int arrayIndex = new Vector2Int(targetCords.getX(), targetCords.getY());
+        boolean xisnegative = false;
+        boolean yisnegative = false;
         if(arrayIndex.getX()<0)
         {
-            arrayIndex.setX(arrayIndex.getX()+32);
+            xisnegative = true;
         }
         if(arrayIndex.getY()<0)
         {
-            arrayIndex.setY(arrayIndex.getY()+32);
+            yisnegative = true;
         }
+        arrayIndex = arrayIndex.abs();
 
-        System.out.println("2:                 "+arrayIndex.getX()+"   "+ arrayIndex.getY());
-        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2Int(arrayIndex.getX(),arrayIndex.getY()));
-
-        testcount++;
-        if(testcount>20)
+        arrayIndex = new Vector2Int(arrayIndex.getX()%1024,arrayIndex.getY()%1024);
+        arrayIndex = new Vector2Int(arrayIndex.getX()/32,arrayIndex.getY()/32);
+        if(xisnegative)
         {
-
+            arrayIndex.setX(-arrayIndex.getX());
+            arrayIndex.setX(arrayIndex.getX()+31);
         }
-    }
+        if(yisnegative)
+        {
+            arrayIndex.setY(-arrayIndex.getY());
+            arrayIndex.setY(arrayIndex.getY()+31);
+        }
 
-    private int testcount;
+        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2Int(arrayIndex.getX(),arrayIndex.getY()));
+    }
     private void changeAnchor(Vector2Int32 offsetVector) throws InvalidVector2Int32Exception
     {
         //creates list elements that arent needed yet

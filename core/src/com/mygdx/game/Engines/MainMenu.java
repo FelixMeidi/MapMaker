@@ -17,8 +17,6 @@ import javax.swing.*;
 public class MainMenu extends ApplicationAdapter
 {
 
-    public SpriteBatch batch;
-
     private OrthographicCamera cam;
 
     private MenuInput in;
@@ -29,6 +27,11 @@ public class MainMenu extends ApplicationAdapter
 
     private JMenuBar menuBar;
 
+
+
+
+
+    public SpriteBatch batch;
 
     @Override
 

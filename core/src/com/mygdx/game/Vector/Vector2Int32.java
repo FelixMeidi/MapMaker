@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Vector;
 
 import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 

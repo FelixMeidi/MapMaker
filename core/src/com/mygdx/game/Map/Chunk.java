@@ -2,10 +2,12 @@ package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Vector2Int;
+import com.mygdx.game.Vector.Vector2Int;
 
 public class Chunk
 {
+
+
 
     //region init
 
@@ -17,12 +19,20 @@ public class Chunk
     //endregion init
 
 
+
+
+
     //region members
 
     private Tile[][] tiles;
 
     //endregion members
 
+
+
+
+
+    //region functions
 
     public void addTile(Tile t, Vector2Int v2)
     {
@@ -46,4 +56,7 @@ public class Chunk
         }
 
     }
+
+
+    //endregion functions
 }

@@ -4,15 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
 import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 
-import com.mygdx.game.Vector2Int;
-import com.mygdx.game.Vector2Int1024;
-import com.mygdx.game.Vector2Int32;
+import com.mygdx.game.Vector.Vector2Int;
+import com.mygdx.game.Vector.Vector2Int1024;
+import com.mygdx.game.Vector.Vector2Int32;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 @XmlRootElement
@@ -162,34 +158,4 @@ public class Map
             }
         }
     }
-
-
-    //region static
-    public void save(String path)
-    {
-        try
-        {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-            File f = new File(path);
-            if(f.exists()/* && !f.isDirectory()*/)
-            {
-
-            }
-            else
-            {
-
-            }
-            writer.close();
-        }
-        catch(IOException e)
-        {
-
-        }
-    }
-
-    public Map load(String path)
-    {
-        return null;
-    }
-    //endregion static
 }

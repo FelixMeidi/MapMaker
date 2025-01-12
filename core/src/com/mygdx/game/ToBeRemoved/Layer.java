@@ -1,13 +1,8 @@
-package com.mygdx.game;
+package com.mygdx.game.ToBeRemoved;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Map.Map;
-import com.mygdx.game.Textures.TextureLoader;
 
 import java.util.ArrayList;
 
@@ -43,7 +38,6 @@ public class Layer
             {
                 System.out.println("this shouldnt happen");
             }
-
         }
         catch (NullPointerException e)
         {

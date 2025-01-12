@@ -1,13 +1,6 @@
-package com.mygdx.game.Engines;
+package com.mygdx.game.ToBeRemoved;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Layer;
-import com.mygdx.game.WorldBuilding.UserInputWB;
 
 public class Engine extends ApplicationAdapter
 {
@@ -29,7 +22,7 @@ public class Engine extends ApplicationAdapter
     public void render()
     {
         ScreenUtils.clear(0, 0, 0, 1);
-     //   UserInputWB.update(cam);
+     //   UserInput.update(cam);
         l1.begin();
      //   l1.draw(s);
         cam.update();

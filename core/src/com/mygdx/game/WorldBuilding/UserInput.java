@@ -5,22 +5,25 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Data.DataManager;
 import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
 import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
-import com.mygdx.game.Vector2Int;
+import com.mygdx.game.Renders.UI;
+import com.mygdx.game.Vector.Vector2Int;
 
-public class UserInputWB implements InputProcessor
+public class UserInput implements InputProcessor
 {
 
     //region init
 
-    public UserInputWB(OrthographicCamera cam, Map targetMap)
+    public UserInput(OrthographicCamera cam, Map targetMap, UI ui)
     {
         super();
         this.cam = cam;
         this.targetMap = targetMap;
+        this.ui = ui;
 
         update();
     }
@@ -32,6 +35,8 @@ public class UserInputWB implements InputProcessor
 
     private final OrthographicCamera cam;
     private final Map targetMap;
+    private final UI ui;
+
     private boolean isHeldDown_W;
     private boolean isHeldDown_S;
     private boolean isHeldDown_A;
@@ -44,6 +49,7 @@ public class UserInputWB implements InputProcessor
 
     public void update()
     {
+        //WASD
         float x = cam.position.x;
         float y = cam.position.y;
         if (isHeldDown_W) y += 25;
@@ -52,61 +58,77 @@ public class UserInputWB implements InputProcessor
         if (isHeldDown_D) x += 25;
 
         cam.position.set(new Vector3(x, y, 0));
-        Gdx.input.setInputProcessor(this);
+
+        //Gdx.input.setInputProcessor(this);/////////////////////
         cam.update();
+
+        //
     }
+
 
     @Override
     public boolean touchDown(int x, int y, int pointer, int button)
     {
-        touchDownLMB(x, y, button);
-        touchDownRMB(x, y, button);
+        //check for UI
+        if(ui.interact(x, y,pointer,button))
+        {
+            return false;
+        }
+
+        //check inputs
+        if (button == Input.Buttons.LEFT)
+        {
+            placeTile(x, y);
+        }
+        else if (button == Input.Buttons.RIGHT)
+        {
+        }
         return false;
     }
 
-    private void touchDownLMB(int x, int y, int button)
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer)
     {
-        if (button == Input.Buttons.LEFT)
+        placeTile(screenX,screenY);
+        return false;
+    }
+
+
+
+    private void placeTile(int x, int y)
+    {
+        Vector3 targetPosV3 = cam.unproject(new Vector3(x, y, 0));
+        Vector2Int targetPos = new Vector2Int((int) targetPosV3.x, (int) targetPosV3.y);
+        try
         {
-            Vector3 v3 = cam.unproject(new Vector3(x, y, 0));
-            Vector2Int v2 = new Vector2Int((int) v3.x, (int) v3.y);
-            int xOver = 0;
-            if (v2.getX() < 0)
-            {
-             //  xOver =32;
-               System.out.println("x:     "+(v2.getX()));
-            }
-            int yOver = 0;
-            if (v2.getY() < 0)
-            {
-             //   yOver =32;
-                System.out.println("y:     "+(v2.getY()));
-            }
-            Vector2Int vfinal = new Vector2Int(v2.getX()-xOver, v2.getY()-yOver);
-            try
-            {
-                targetMap.add(new Tile(0), vfinal);
-                targetMap.add(new Tile(0), vfinal.addEquals(32,0));
-                targetMap.add(new Tile(0), vfinal.addEquals(0,32));
-                targetMap.add(new Tile(0), vfinal.addEquals(-32,0));
-                targetMap.add(new Tile(0), vfinal.addEquals(0,-32));
-            }
-            catch (InvalidVector2Int32Exception | InvalidVector2Int1024Exception e)
-            {
-                e.addMessage("UserInputWB,touchDownLMB:");
-                System.out.println(e.getMessage());
-            }
+            targetMap.add(new Tile(0), targetPos);
+        }
+        catch (InvalidVector2Int32Exception | InvalidVector2Int1024Exception e)
+        {
+            e.addMessage("UserInput,touchDownLMB:");
+            System.out.println(e.getMessage());
         }
     }
+
+
+
+
 
 
     @Override
     public boolean keyDown(int keycode)
     {
+        //region WASD
         if (keycode == Input.Keys.W) isHeldDown_W = true;
-        if (keycode == Input.Keys.S) isHeldDown_S = true;
-        if (keycode == Input.Keys.A) isHeldDown_A = true;
-        if (keycode == Input.Keys.D) isHeldDown_D = true;
+        else if (keycode == Input.Keys.S) isHeldDown_S = true;
+        else if (keycode == Input.Keys.A) isHeldDown_A = true;
+        else if (keycode == Input.Keys.D) isHeldDown_D = true;
+        //endregion WASD
+        else if (keycode == Input.Keys.P)
+        {
+            DataManager.saveMap(targetMap);
+        }
         return false;
     }
 
@@ -126,11 +148,11 @@ public class UserInputWB implements InputProcessor
     {
         if (amountY > 0)
         {
-            cam.zoom *= 1.1;
+            cam.zoom += 0.1;
         }
         else
         {
-            cam.zoom *= 0.9;
+            cam.zoom -= 0.1;
         }
         return true;
     }
@@ -143,32 +165,23 @@ public class UserInputWB implements InputProcessor
     }
 
 
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button)
     {
         return false;
     }
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer)
-    {
-        return false;
-    }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY)
     {
-        touchDownLMB(screenX,screenY,Input.Buttons.LEFT);
         return false;
     }
 
-    private void touchDownRMB(int x, int y, int button)
-    {
-        if (button == Input.Buttons.RIGHT)
-        {
 
-        }
-    }
+
+    private void touchDownRMB(int x, int y){}
 
     //endregion notInUse
 

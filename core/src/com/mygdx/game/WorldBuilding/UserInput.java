@@ -1,6 +1,5 @@
 package com.mygdx.game.WorldBuilding;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,7 +9,7 @@ import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
 import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
-import com.mygdx.game.Renders.UI;
+import com.mygdx.game.ToBeRemoved.UI;
 import com.mygdx.game.Vector.Vector2Int;
 
 public class UserInput implements InputProcessor

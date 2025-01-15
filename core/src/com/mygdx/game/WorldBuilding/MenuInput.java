@@ -1,16 +1,8 @@
 package com.mygdx.game.WorldBuilding;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Data.DataManager;
-import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
-import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
-import com.mygdx.game.Map.Map;
-import com.mygdx.game.Map.Tile;
-import com.mygdx.game.Renders.UI;
-import com.mygdx.game.Vector.Vector2Int;
+import com.mygdx.game.ToBeRemoved.UI;
 
 public class MenuInput implements InputProcessor
 {
@@ -42,7 +34,7 @@ public class MenuInput implements InputProcessor
     public void update()
     {
 
-
+        cam.update();
     }
 
 

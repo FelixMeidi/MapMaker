@@ -10,15 +10,15 @@ public class Launcher
     private static Lwjgl3Application app;
     public static void main(String[] arg)
     {
-       // openMainMenu();
-
+        openMainMenu();
+/*
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("project2");
         config.setWindowedMode(1920/2, 1080/2);
 
         app = new Lwjgl3Application(new Project(), config);
-
+*/
 
 
     }

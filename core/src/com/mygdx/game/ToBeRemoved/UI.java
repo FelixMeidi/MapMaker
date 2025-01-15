@@ -1,11 +1,10 @@
-package com.mygdx.game.Renders;
+package com.mygdx.game.ToBeRemoved;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Renders.Button;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UI
@@ -32,7 +31,7 @@ public class UI
         //test
 
         Texture tx = new Texture("assets/mapmaker_UI_file.png");
-        batch.draw(tx,-(Gdx.graphics.getWidth()/2),(Gdx.graphics.getHeight()/2)-tx.getHeight());
+   //     batch.draw(tx,-(Gdx.graphics.getWidth()/2),(Gdx.graphics.getHeight()/2)-tx.getHeight());
 
 
 

@@ -4,12 +4,13 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.ToBeRemoved.Layer;
 import com.mygdx.game.Textures.TextureLoader;
-import com.mygdx.game.Renders.UI;
+import com.mygdx.game.ToBeRemoved.UI;
 import com.mygdx.game.WorldBuilding.MenuInput;
 
 import javax.swing.*;
@@ -23,9 +24,13 @@ public class MainMenu extends ApplicationAdapter
 
     private Viewport vp;
 
-    private UI ui;
+    private Stage stage;
 
-    private JMenuBar menuBar;
+    private Table table;
+
+//    private UI ui;
+
+ //   private JMenuBar menuBar;
 
 
 
@@ -37,28 +42,40 @@ public class MainMenu extends ApplicationAdapter
 
     public void create()
     {
+        //UI
+        stage = new Stage();
+        table = new Table();
+
+        table.setFillParent(true); //auto resize
+        stage.addActor(table);
+
+        // table.setDebug(true);
+
+
         //initiating textures
         batch = new SpriteBatch();
 
         //cameras
-        cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        vp = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), cam);
+    //    cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    //    vp = new ExtendViewport(cam.viewportWidth,cam.viewportHeight, cam);
 
         //input processor
-        in = new MenuInput(cam,ui);
-        Gdx.input.setInputProcessor(in);
+   //     in = new MenuInput(cam,ui);
+        Gdx.input.setInputProcessor(stage); ////////////
 
         vp.apply();
 
-        menuBar = new JMenuBar();
 
-        //test
 
-        JMenu menuItem = new JMenu("test");
+      /*  menuBar = new JMenuBar();
+
+
+         JMenu menuItem = new JMenu("test");
 
         menuBar.add(menuItem);
 
-        menuBar.updateUI();
+
+        menuBar.updateUI();*/
     }
 
     @Override
@@ -76,7 +93,7 @@ public class MainMenu extends ApplicationAdapter
         batch.end();
 
         //input
-        in.update();
+     //   in.update();
         cam.update();
 
     }
@@ -91,6 +108,7 @@ public class MainMenu extends ApplicationAdapter
     @Override
     public void resize(int width, int height)
     {
-        vp.update(width,height);
+       // vp.update(width,height);
+        stage.getViewport().update(width, height, true);
     }
 }

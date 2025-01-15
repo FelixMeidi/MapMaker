@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ToBeRemoved.Layer;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Textures.TextureLoader;
-import com.mygdx.game.Renders.UI;
 import com.mygdx.game.WorldBuilding.UserInput;
 
 public class Project extends ApplicationAdapter
@@ -26,7 +25,7 @@ public class Project extends ApplicationAdapter
 
     private Layer l1;
 
-    private UI ui;
+ //   private UI ui;
 
 
     @Override
@@ -42,7 +41,7 @@ public class Project extends ApplicationAdapter
         vp = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), TextureCam);
 
 
-        ui = new UI(new SpriteBatch(),new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+    //    ui = new UI(new SpriteBatch(),new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
 
 
@@ -50,7 +49,7 @@ public class Project extends ApplicationAdapter
         l1 = new Layer(TextureCam,m);
         TextureCam.zoom=0.5f;
         TextureCam.update();
-        userin = new UserInput(TextureCam, m,ui);
+     //   userin = new UserInput(TextureCam, m,ui);
         Gdx.input.setInputProcessor(userin);
         Layer.layerList.add(l1);
         vp.apply();
@@ -66,7 +65,7 @@ public class Project extends ApplicationAdapter
 
         //draw
         Layer.drawAll(batchDraw);
-        ui.draw();
+     //   ui.draw();
 
         //end draw
         batchDraw.end();

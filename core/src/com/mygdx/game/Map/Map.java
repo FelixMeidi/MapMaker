@@ -1,12 +1,12 @@
 package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
-import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
+import com.mygdx.game.ToBeRemoved.InvalidVector2Int1024Exception;
+import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
 
 import com.mygdx.game.Vector.Vector2Int;
-import com.mygdx.game.Vector.Vector2Int1024;
-import com.mygdx.game.Vector.Vector2Int32;
+import com.mygdx.game.ToBeRemoved.Vector2Int1024;
+import com.mygdx.game.ToBeRemoved.Vector2Int32;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;

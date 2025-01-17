@@ -13,19 +13,19 @@ public abstract class DataManager
     {
         try
         {
-            File dir = new File(System.getProperty("user.home")+"/documents/mapmaker1024");
+            File dir = new File(System.getProperty("user.home")+"/documents/MapMaker");
             if(!dir.exists())
             {
                 dir.mkdir();
             }
 
-            File dir1 = new File(System.getProperty("user.home")+"/documents/mapmaker1024/pack1");
+            File dir1 = new File(System.getProperty("user.home")+"/documents/MapMaker/pack1");
             if(!dir1.exists())
             {
                 dir1.mkdir();
             }
 
-            File dir2 = new File(System.getProperty("user.home")+"/documents/mapmaker1024/pack1/textures");
+            File dir2 = new File(System.getProperty("user.home")+"/documents/MapMaker/pack1/textures");
             if(!dir2.exists())
             {
                 dir2.mkdir();
@@ -33,12 +33,12 @@ public abstract class DataManager
 
 
 
-            File f = new File(System.getProperty("user.home")+"/documents/mapmaker1024/pack1/map1.map32");
+            File f = new File(System.getProperty("user.home")+"/documents/MapMaker/pack1/map1.map32");
             if(!f.exists())
             {
                 f.createNewFile();
             }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/documents/mapmaker1024/pack1/map1.map32"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/documents/MapMaker/pack1/map1.map32"));
 
             writer.write("teest");
             writer.close();

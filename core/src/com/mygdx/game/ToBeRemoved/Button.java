@@ -1,4 +1,4 @@
-package com.mygdx.game.Renders;
+package com.mygdx.game.ToBeRemoved;
 
 public class Button
 {

@@ -27,6 +27,7 @@ allprojects {
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
+        visuiVersion = '1.5.1'
     }
 
 
@@ -51,6 +52,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+
         
     }
 }
@@ -65,6 +67,6 @@ project(":core") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
-        
+        api "com.kotcrab.vis:vis-ui:$visuiVersion"
     }
 }

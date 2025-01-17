@@ -1,6 +1,6 @@
-package com.mygdx.game.Vector;
+package com.mygdx.game.ToBeRemoved;
 
-import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
+import com.mygdx.game.Vector.Vector2Int;
 
 public class Vector2Int32 extends Vector2Int
 {

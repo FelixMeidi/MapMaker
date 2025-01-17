@@ -1,4 +1,6 @@
-package com.mygdx.game.Exceptions;
+package com.mygdx.game.ToBeRemoved;
+
+import com.mygdx.game.Exceptions.InvalidVector2Exception;
 
 public class InvalidVector2Int1024Exception extends InvalidVector2Exception
 {

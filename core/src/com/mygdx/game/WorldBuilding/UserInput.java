@@ -5,11 +5,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Data.DataManager;
-import com.mygdx.game.Exceptions.InvalidVector2Int1024Exception;
-import com.mygdx.game.Exceptions.InvalidVector2Int32Exception;
+import com.mygdx.game.ToBeRemoved.InvalidVector2Int1024Exception;
+import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
-import com.mygdx.game.ToBeRemoved.UI;
 import com.mygdx.game.Vector.Vector2Int;
 
 public class UserInput implements InputProcessor
@@ -17,12 +16,11 @@ public class UserInput implements InputProcessor
 
     //region init
 
-    public UserInput(OrthographicCamera cam, Map targetMap, UI ui)
+    public UserInput(OrthographicCamera cam, Map targetMap)
     {
         super();
         this.cam = cam;
         this.targetMap = targetMap;
-        this.ui = ui;
 
         update();
     }
@@ -34,7 +32,6 @@ public class UserInput implements InputProcessor
 
     private final OrthographicCamera cam;
     private final Map targetMap;
-    private final UI ui;
 
     private boolean isHeldDown_W;
     private boolean isHeldDown_S;
@@ -68,11 +65,6 @@ public class UserInput implements InputProcessor
     @Override
     public boolean touchDown(int x, int y, int pointer, int button)
     {
-        //check for UI
-        if(ui.interact(x, y,pointer,button))
-        {
-            return false;
-        }
 
         //check inputs
         if (button == Input.Buttons.LEFT)
@@ -93,6 +85,11 @@ public class UserInput implements InputProcessor
         return false;
     }
 
+   /* @Override
+    public boolean touchCancelled(int x, int y, int z, int u)
+    {
+        return false;
+    }*/
 
 
     private void placeTile(int x, int y)

@@ -2,18 +2,16 @@ package com.mygdx.game.WorldBuilding;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.ToBeRemoved.UI;
 
 public class MenuInput implements InputProcessor
 {
 
     //region init
 
-    public MenuInput(OrthographicCamera cam, UI ui)
+    public MenuInput(OrthographicCamera cam)
     {
         super();
         this.cam = cam;
-        this.ui = ui;
 
         update();
     }
@@ -24,7 +22,6 @@ public class MenuInput implements InputProcessor
     //region members
 
     private final OrthographicCamera cam;
-    private final UI ui;
 
     //endregion members
 
@@ -41,10 +38,6 @@ public class MenuInput implements InputProcessor
     @Override
     public boolean touchDown(int x, int y, int pointer, int button)
     {
-        //check for UI
-        if(ui.interact(x, y,pointer,button))
-        {
-        }
         return false;
     }
 
@@ -58,8 +51,12 @@ public class MenuInput implements InputProcessor
 
 
 
-
-
+ /*   @Override
+    public boolean touchCancelled(int x, int y, int z, int u)
+    {
+        return false;
+    }
+*/
 
 
     @Override

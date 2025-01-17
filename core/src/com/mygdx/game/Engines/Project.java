@@ -41,15 +41,12 @@ public class Project extends ApplicationAdapter
         vp = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), TextureCam);
 
 
-    //    ui = new UI(new SpriteBatch(),new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-
-
 
         Map m = new Map();
         l1 = new Layer(TextureCam,m);
         TextureCam.zoom=0.5f;
         TextureCam.update();
-     //   userin = new UserInput(TextureCam, m,ui);
+        userin = new UserInput(TextureCam, m);
         Gdx.input.setInputProcessor(userin);
         Layer.layerList.add(l1);
         vp.apply();

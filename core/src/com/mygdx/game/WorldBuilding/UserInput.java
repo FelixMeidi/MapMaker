@@ -5,11 +5,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Data.DataManager;
+import com.mygdx.game.Exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.ToBeRemoved.InvalidVector2Int1024Exception;
 import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
 import com.mygdx.game.Vector.Vector2Int;
+import com.mygdx.game.Vector.Vector2IntLim;
 
 public class UserInput implements InputProcessor
 {
@@ -69,7 +71,14 @@ public class UserInput implements InputProcessor
         //check inputs
         if (button == Input.Buttons.LEFT)
         {
-            placeTile(x, y);
+            try
+            {
+                placeTile(x, y);
+            }
+            catch (InvalidVector2IntLimException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
         else if (button == Input.Buttons.RIGHT)
         {
@@ -81,19 +90,26 @@ public class UserInput implements InputProcessor
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer)
     {
-        placeTile(screenX,screenY);
+        try
+        {
+            placeTile(screenX,screenY);
+        }
+        catch (InvalidVector2IntLimException e)
+        {
+            throw new RuntimeException(e);
+        }
         return false;
     }
 
-    private void placeTile(int x, int y)
+    private void placeTile(int x, int y) throws InvalidVector2IntLimException
     {
         Vector3 targetPosV3 = cam.unproject(new Vector3(x, y, 0));
-        Vector2Int targetPos = new Vector2Int((int) targetPosV3.x, (int) targetPosV3.y);
+        Vector2IntLim targetPos = new Vector2IntLim(1,(int) targetPosV3.x, (int) targetPosV3.y);
         try
         {
             targetMap.add(new Tile(0), targetPos);
         }
-        catch (InvalidVector2Int32Exception | InvalidVector2Int1024Exception e)
+        catch (InvalidVector2IntLimException e)
         {
             e.addMessage("UserInput,touchDownLMB:");
             System.out.println(e.getMessage());

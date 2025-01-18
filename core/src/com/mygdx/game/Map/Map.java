@@ -1,12 +1,14 @@
 package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.ToBeRemoved.InvalidVector2Int1024Exception;
 import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
 
 import com.mygdx.game.Vector.Vector2Int;
 import com.mygdx.game.ToBeRemoved.Vector2Int1024;
 import com.mygdx.game.ToBeRemoved.Vector2Int32;
+import com.mygdx.game.Vector.Vector2IntLim;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -16,21 +18,23 @@ public class Map
 {
     //outer: x, inner: y
     private ArrayList<ArrayList<Chunk>> mapChunkLists2D;
-    private Vector2Int1024 anchor;
+    private Vector2IntLim anchor;
+    public final int chunkSize = 1024;
 
     public Map()
     {
         mapChunkLists2D = new ArrayList<>();
-        anchor = new Vector2Int1024();
+        anchor = new Vector2IntLim(1024);
     }
 
-    public void add(Tile t, Vector2Int targetCords) throws InvalidVector2Int32Exception, InvalidVector2Int1024Exception
+    public void add(Tile t, Vector2IntLim targetCords) throws InvalidVector2IntLimException
     {
 
         //get chunk coordinates
 
-        Vector2Int1024 chunk = new Vector2Int1024(targetCords.getX() - (targetCords.getX() % 1024),targetCords.getY() - (targetCords.getY() % 1024));
-
+        Vector2IntLim chunk = new Vector2IntLim(1024 ,targetCords.getX() - (targetCords.getX() % 1024),targetCords.getY() - (targetCords.getY() % 1024));
+       // System.out.println("1:   "+targetCords.getX()+"    "+targetCords.getY());
+      //  System.out.println("2:   "+chunk.getX()+"    "+chunk.getY());
         if(targetCords.getX()<0)
         {
             chunk.setX(chunk.getX()-1024);
@@ -41,10 +45,10 @@ public class Map
         }
 
         //region change anchor
-        Vector2Int32 offsetVector = null;
+        Vector2IntLim offsetVector = null;
         try
         {
-            offsetVector = new Vector2Int32();
+            offsetVector = new Vector2IntLim(1024);
             if(chunk.getX() < anchor.getX())
             {
                 offsetVector.setX(chunk.getX());
@@ -55,21 +59,24 @@ public class Map
             }
             if(!offsetVector.isZero())
             {
+               // System.out.println(chunk.getX()+"    "+chunk.getY());
+               // offsetVector.divideByLim();
+               // offsetVector = new Vector2IntLim(1, offsetVector.getX()*1,offsetVector.getY()*1);
                 changeAnchor(offsetVector);
             }
 
         }
-        catch(InvalidVector2Int32Exception e)
+        catch(InvalidVector2IntLimException e)
         {
             e.addMessage("Map,changeAnchor:");
             throw e;
         }
         //endregion change anchor
 
-        Vector2Int anchorIndex = anchor.divideBy1024eq();
+        Vector2IntLim anchorIndex = anchor.divideByLim();
         anchorIndex = anchorIndex.abs();
 //
-        Vector2Int realChunkIndex = anchorIndex.addEquals(chunk.divideBy1024eq());
+        Vector2IntLim realChunkIndex = anchorIndex.add(chunk.divideByLim());
 
 
         Chunk targetChunk = null;
@@ -126,12 +133,14 @@ public class Map
             arrayIndex.setY(arrayIndex.getY()+31);
         }
 
-        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2Int(arrayIndex.getX(),arrayIndex.getY()));
+        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2IntLim(1,arrayIndex.getX(),arrayIndex.getY()));
     }
-    private void changeAnchor(Vector2Int32 offsetVector) throws InvalidVector2Int32Exception
+    private void changeAnchor(Vector2IntLim offsetVector) throws InvalidVector2IntLimException
     {
+      //  System.out.println(offsetVector.getX()+"    "+offsetVector.getY());
         //creates list elements that arent needed yet
-        Vector2Int indexOffset = offsetVector.divideBy1024eq();
+        Vector2IntLim indexOffset = offsetVector.divideByLim();
+        System.out.println(indexOffset.getX()+"    "+indexOffset.getY());
         for(int c1 = 0;c1 < mapChunkLists2D.size();c1++)
         {
             mapChunkLists2D.get(c1);
@@ -145,16 +154,16 @@ public class Map
         {
             mapChunkLists2D.add(0,new ArrayList<Chunk>());
         }
-        anchor.addOn(offsetVector);
+        anchor = anchor.add(offsetVector);
     }
 
-    public void draw(SpriteBatch batch) throws InvalidVector2Int32Exception
+    public void draw(SpriteBatch batch) throws InvalidVector2IntLimException
     {
         for(int c1 = 0; c1 < mapChunkLists2D.size(); c1++)
         {
             for(int c2 = 0; c2 < mapChunkLists2D.get(c1).size(); c2++)
             {
-                mapChunkLists2D.get(c1).get(c2).draw(batch,anchor.addEquals(new Vector2Int32(c1*1024,c2*1024)));
+                mapChunkLists2D.get(c1).get(c2).draw(batch,anchor.add(new Vector2IntLim(32,c1*1024,c2*1024)));
             }
         }
     }

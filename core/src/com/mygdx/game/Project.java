@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
+
+import java.util.ArrayList;
+
 public class Project
 {
     public Project(String name)
@@ -8,4 +12,6 @@ public class Project
     }
 
     public String name;
+
+    private ArrayList<Texture> textureList;
 }

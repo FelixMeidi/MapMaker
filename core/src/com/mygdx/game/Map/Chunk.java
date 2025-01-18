@@ -3,6 +3,7 @@ package com.mygdx.game.Map;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Vector.Vector2Int;
+import com.mygdx.game.Vector.Vector2IntLim;
 
 public class Chunk
 {
@@ -34,13 +35,13 @@ public class Chunk
 
     //region functions
 
-    public void addTile(Tile t, Vector2Int v2)
+    public void addTile(Tile t, Vector2IntLim v2)
     {
         tiles[v2.getX()][v2.getY()] = t;
     }
 
 
-    public void draw(SpriteBatch batch,Vector2Int offset)
+    public void draw(SpriteBatch batch, Vector2IntLim offset)
     {
         TextureRegion r;
         for (int c1 = 0; c1 < tiles.length; c1++)

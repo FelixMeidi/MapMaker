@@ -1,6 +1,6 @@
 package com.mygdx.game.Vector;
 
-import com.mygdx.game.Exceptions.InvalidVector2LimException;
+import com.mygdx.game.Exceptions.InvalidVector2IntLimException;
 
 public class Vector2IntLim
 {
@@ -12,7 +12,7 @@ public class Vector2IntLim
 
     //region init
 
-    public Vector2IntLim(int lim, int x, int y) throws InvalidVector2LimException
+    public Vector2IntLim(int lim, int x, int y) throws InvalidVector2IntLimException
     {
         this.lim = lim;
         checkCoords(x);
@@ -45,7 +45,7 @@ public class Vector2IntLim
     {
         return x;
     }
-    public void setX(int x) throws InvalidVector2LimException
+    public void setX(int x) throws InvalidVector2IntLimException
     {
         checkCoords(x);
         this.x = x;
@@ -56,7 +56,7 @@ public class Vector2IntLim
     {
         return y;
     }
-    public void setY(int y) throws InvalidVector2LimException
+    public void setY(int y) throws InvalidVector2IntLimException
     {
         checkCoords(y);
         this.y = y;
@@ -72,35 +72,29 @@ public class Vector2IntLim
     //region functions
 
 
-    private void checkCoords(int c) throws InvalidVector2LimException
+    private void checkCoords(int c) throws InvalidVector2IntLimException
     {
-        if(c%lim!=0)throw new InvalidVector2LimException(x,y,lim,"Invalid coordinates for limited Vector2Int:");
+        if(c%lim!=0)throw new InvalidVector2IntLimException(x,y,lim,"Invalid coordinates for limited Vector2Int:");
     }
 
-/*
+    public Vector2IntLim divideByLim() throws InvalidVector2IntLimException
+    {
+        return new Vector2IntLim(1,x/lim,y/lim);
+    }
+
+
 
     //region add
 
-    public Vector2IntLim addEquals(Vector2IntLim v2i)
+    public Vector2IntLim add(Vector2IntLim v2i)throws InvalidVector2IntLimException
     {
-        return new Vector2IntLim(x+ v2i.x,y+ v2i.y);
+        return new Vector2IntLim(lim, x+ v2i.x,y+ v2i.y);
     }
-    public Vector2IntLim addEquals(int xAdd, int yAdd)
+    public Vector2IntLim add(int xAdd, int yAdd) throws InvalidVector2IntLimException
     {
-        return new Vector2IntLim(x+ xAdd,y+ yAdd);
+        return new Vector2IntLim(lim,x+ xAdd,y+ yAdd);
     }
-
-    public void addOn(Vector2IntLim v2fl)
-    {
-        this.x = x+ v2fl.x;
-        this.y = y+ v2fl.y;
-    }
-    public void addOn(int xAdd, int yAdd)
-    {
-        this.x = x+ xAdd;
-        this.y = y+ yAdd;
-    }
-
+/*
     //endregion add
 
     //region sub
@@ -127,10 +121,10 @@ public class Vector2IntLim
 
     //endregion sub
 
-
-    public Vector2IntLim abs()
+    */
+    public Vector2IntLim abs() throws InvalidVector2IntLimException
     {
-        Vector2IntLim v = new Vector2IntLim(x,y);
+        Vector2IntLim v = new Vector2IntLim(lim,x,y);
         if(v.x<0)
         {
             v.x = -v.x;
@@ -153,6 +147,6 @@ public class Vector2IntLim
         }
         return false;
     }
-    */
+
     //endregion functions
 }

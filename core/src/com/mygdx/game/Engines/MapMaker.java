@@ -12,9 +12,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
+import com.mygdx.game.Exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Project;
 import com.mygdx.game.Textures.TextureLoader;
+import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
 import com.mygdx.game.ToBeRemoved.Layer;
 import com.mygdx.game.WorldBuilding.UserInput;
 
@@ -37,7 +39,7 @@ public class MapMaker extends ApplicationAdapter
 
     private Viewport vp;
 
-    private Layer l1;
+    private Map m;
 
     private JFrame mainMenu;
 
@@ -78,7 +80,6 @@ public class MapMaker extends ApplicationAdapter
     private void mainMenu()
     {
         //JFrame
-
         mainMenu = new JFrame();
         mainMenu.setLocation(Gdx.graphics.getDisplayMode().width/2 -menuSizeX/2,Gdx.graphics.getDisplayMode().height/2 -menuSizeY/2);
         mainMenu.getContentPane().setLayout(null);
@@ -88,7 +89,6 @@ public class MapMaker extends ApplicationAdapter
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 if(!activeProject)
                 {
-                    System.out.println("TEST");
                     Gdx.app.exit();
                     System.exit(0);
                 }
@@ -148,13 +148,11 @@ public class MapMaker extends ApplicationAdapter
         TextureCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         vp = new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), TextureCam);
 
-        Map m = new Map();
-        l1 = new Layer(TextureCam,m);
+        m = new Map();
         TextureCam.zoom=0.5f;
         TextureCam.update();
         userin = new UserInput(TextureCam, m);
         Gdx.input.setInputProcessor(userin);
-        Layer.layerList.add(l1);
         vp.apply();
     }
 
@@ -189,7 +187,15 @@ public class MapMaker extends ApplicationAdapter
 
                 currentProject = new Project(title);
                 activeProject = true;
-                mainMenu.dispose();
+                mainMenu.dispatchEvent(new WindowEvent(mainMenu,WindowEvent.WINDOW_CLOSING));
+                try
+                {
+                    Gdx.graphics.wait(1000);
+                }
+                catch (Exception e)
+                {
+
+                }
             }
         }
     }
@@ -211,8 +217,16 @@ public class MapMaker extends ApplicationAdapter
 
 
             //draw
-            Layer.drawAll(batchDraw);
+
             //   ui.draw();
+            try
+            {
+                m.draw(batchDraw);
+            }
+            catch (InvalidVector2IntLimException e)
+            {
+                throw new RuntimeException(e);
+            }
 
             //end draw
             batchDraw.end();

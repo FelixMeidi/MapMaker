@@ -1,4 +1,4 @@
-package com.mygdx.game.WorldBuilding;
+package com.mygdx.game.ToBeRemoved;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;

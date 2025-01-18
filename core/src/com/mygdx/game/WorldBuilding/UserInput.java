@@ -85,13 +85,6 @@ public class UserInput implements InputProcessor
         return false;
     }
 
-   /* @Override
-    public boolean touchCancelled(int x, int y, int z, int u)
-    {
-        return false;
-    }*/
-
-
     private void placeTile(int x, int y)
     {
         Vector3 targetPosV3 = cam.unproject(new Vector3(x, y, 0));
@@ -148,7 +141,10 @@ public class UserInput implements InputProcessor
         }
         else
         {
-            cam.zoom -= 0.1;
+            if(cam.zoom>0.2)
+            {
+                cam.zoom -= 0.1;
+            }
         }
         return true;
     }

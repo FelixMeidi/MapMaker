@@ -1,6 +1,6 @@
 package com.mygdx.game.tools.data;
 
-import com.mygdx.game.Map.Map;
+import com.mygdx.game.map.Map;
 
 import java.io.BufferedWriter;
 import java.io.File;

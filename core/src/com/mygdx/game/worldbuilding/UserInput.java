@@ -1,14 +1,13 @@
-package com.mygdx.game.WorldBuilding;
+package com.mygdx.game.worldbuilding;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.tools.data.DataManager;
+import com.mygdx.game.map.Map;
 import com.mygdx.game.tools.exceptions.ExceptionHandler;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
-import com.mygdx.game.Map.Map;
-import com.mygdx.game.Map.Tile;
+import com.mygdx.game.map.Tile;
 import com.mygdx.game.tools.vector.Vector2IntLim;
 
 public class UserInput implements InputProcessor
@@ -16,11 +15,11 @@ public class UserInput implements InputProcessor
 
     //region init
 
-    public UserInput(OrthographicCamera cam, Project project)
+    public UserInput(OrthographicCamera cam, Map map)
     {
         super();
         this.cam = cam;
-        this.project = project;
+        this.map = map;
 
         update();
     }
@@ -37,7 +36,7 @@ public class UserInput implements InputProcessor
     private boolean isHeldDown_A;
     private boolean isHeldDown_D;
 
-    private final Project project;
+    private final Map map;
     //endregion members
 
 
@@ -94,7 +93,7 @@ public class UserInput implements InputProcessor
         Vector2IntLim targetPos = new Vector2IntLim(1,(int) targetPosV3.x, (int) targetPosV3.y);
         try
         {
-            project.getMap().add(new Tile(0), targetPos);
+            map.add(new Tile(0), targetPos);
         }
         catch (InvalidVector2IntLimException e)
         {
@@ -119,7 +118,7 @@ public class UserInput implements InputProcessor
         //endregion WASD
         else if (keycode == Input.Keys.P)
         {
-            project.save();
+            map.getProject().save();
         }
         return false;
     }

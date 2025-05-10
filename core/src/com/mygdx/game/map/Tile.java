@@ -1,10 +1,9 @@
-package com.mygdx.game.Map;
+package com.mygdx.game.map;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.Textures.TextureLoader;
+import com.mygdx.game.tools.textures.TextureLoader;
 
 public class Tile extends Image
 {

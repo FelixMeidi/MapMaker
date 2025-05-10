@@ -6,30 +6,34 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.WorldBuilding.Project;
+import com.mygdx.game.worldbuilding.Project;
 import com.mygdx.game.tools.exceptions.ExceptionHandler;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
-import com.mygdx.game.Map.Map;
-import com.mygdx.game.Textures.TextureLoader;
-import com.mygdx.game.WorldBuilding.UserInput;
+import com.mygdx.game.map.Map;
+import com.mygdx.game.tools.textures.TextureLoader;
+import com.mygdx.game.worldbuilding.UserInput;
 
 public class EditorScreen implements Screen
 {
-    private UserInput userin;
+    private UserInput userInput;
     private SpriteBatch batch;
     private OrthographicCamera cam;
+
+    private Project project;
     private Map map;
 
     @Override
     public void show()
     {
+        project = new Project();
         TextureLoader.loadTextures();
         batch = new SpriteBatch();
         cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         map = new Map();
+        project.addMap(map);
         cam.update();
-        userin = new UserInput(cam, new Project(map));
-        Gdx.input.setInputProcessor(userin);
+        userInput = new UserInput(cam, map);
+        Gdx.input.setInputProcessor(userInput);
     }
 
     @Override
@@ -48,7 +52,7 @@ public class EditorScreen implements Screen
         }
         batch.end();
         cam.update();
-        userin.update();
+        userInput.update();
     }
 
     //region not in use

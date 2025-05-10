@@ -20,6 +20,7 @@ public class MainMenuScreen implements Screen
         this.master = master;
         stage = new Stage();
     }
+
     private final Game master;
     private final Integer sizeX;
     private final Integer sizeY;

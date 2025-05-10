@@ -1,4 +1,4 @@
-package com.mygdx.game.Vector;
+package com.mygdx.game.tools.vector;
 
 public class Vector2Int
 {

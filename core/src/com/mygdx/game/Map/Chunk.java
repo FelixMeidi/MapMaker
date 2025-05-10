@@ -2,8 +2,7 @@ package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Vector.Vector2Int;
-import com.mygdx.game.Vector.Vector2IntLim;
+import com.mygdx.game.tools.vector.Vector2IntLim;
 
 public class Chunk
 {

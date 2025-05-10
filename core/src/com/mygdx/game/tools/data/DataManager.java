@@ -1,4 +1,4 @@
-package com.mygdx.game.Data;
+package com.mygdx.game.tools.data;
 
 import com.mygdx.game.Map.Map;
 

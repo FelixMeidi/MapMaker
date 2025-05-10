@@ -1,26 +1,25 @@
-package com.mygdx.game.WorldBuilding;
+package com.mygdx.game.ToBeRemoved;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.tools.data.DataManager;
-import com.mygdx.game.tools.exceptions.ExceptionHandler;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.Map.Tile;
 import com.mygdx.game.tools.vector.Vector2IntLim;
 
-public class UserInput implements InputProcessor
+public class InputHandler extends Stage
 {
 
     //region init
 
-    public UserInput(OrthographicCamera cam, Project project)
+    public InputHandler(OrthographicCamera cam, Map targetMap)
     {
         super();
         this.cam = cam;
-        this.project = project;
+        this.targetMap = targetMap;
 
         update();
     }
@@ -31,13 +30,13 @@ public class UserInput implements InputProcessor
     //region members
 
     private final OrthographicCamera cam;
+    private final Map targetMap;
 
     private boolean isHeldDown_W;
     private boolean isHeldDown_S;
     private boolean isHeldDown_A;
     private boolean isHeldDown_D;
 
-    private final Project project;
     //endregion members
 
 
@@ -45,30 +44,44 @@ public class UserInput implements InputProcessor
 
     public void update()
     {
+        //WASD
         float x = cam.position.x;
         float y = cam.position.y;
         if (isHeldDown_W) y += 25;
         if (isHeldDown_S) y -= 25;
         if (isHeldDown_A) x -= 25;
         if (isHeldDown_D) x += 25;
+
         cam.position.set(new Vector3(x, y, 0));
+
+        //Gdx.input.setInputProcessor(this);/////////////////////
         cam.update();
+
+        //
     }
 
 
     @Override
     public boolean touchDown(int x, int y, int pointer, int button)
     {
+        if(super.touchDown(x,y,pointer,button))return true;
+
+
+        //check inputs
         if (button == Input.Buttons.LEFT)
         {
             try
             {
+                System.out.println(x+"    "+y);
                 placeTile(x, y);
             }
             catch (InvalidVector2IntLimException e)
             {
-                ExceptionHandler.outputException(e);
+                throw new RuntimeException(e);
             }
+        }
+        else if (button == Input.Buttons.RIGHT)
+        {
         }
         return false;
     }
@@ -77,13 +90,15 @@ public class UserInput implements InputProcessor
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer)
     {
+        if(super.touchDragged(screenX,screenY,pointer))return true;
+
         try
         {
             placeTile(screenX,screenY);
         }
         catch (InvalidVector2IntLimException e)
         {
-            ExceptionHandler.outputException(e);
+            throw new RuntimeException(e);
         }
         return false;
     }
@@ -94,12 +109,12 @@ public class UserInput implements InputProcessor
         Vector2IntLim targetPos = new Vector2IntLim(1,(int) targetPosV3.x, (int) targetPosV3.y);
         try
         {
-            project.getMap().add(new Tile(0), targetPos);
+            targetMap.add(new Tile(0), targetPos);
         }
         catch (InvalidVector2IntLimException e)
         {
             e.addMessage("UserInput,touchDownLMB:");
-            ExceptionHandler.outputException(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -108,7 +123,6 @@ public class UserInput implements InputProcessor
 
 
 
-    @Override
     public boolean keyDown(int keycode)
     {
         //region WASD
@@ -116,10 +130,10 @@ public class UserInput implements InputProcessor
         else if (keycode == Input.Keys.S) isHeldDown_S = true;
         else if (keycode == Input.Keys.A) isHeldDown_A = true;
         else if (keycode == Input.Keys.D) isHeldDown_D = true;
-        //endregion WASD
+            //endregion WASD
         else if (keycode == Input.Keys.P)
         {
-            project.save();
+            DataManager.saveMap(targetMap);
         }
         return false;
     }
@@ -127,6 +141,8 @@ public class UserInput implements InputProcessor
     @Override
     public boolean keyUp(int keycode)
     {
+        if(super.keyUp(keycode))return true;
+
         if (keycode == Input.Keys.W) isHeldDown_W = false;
         if (keycode == Input.Keys.S) isHeldDown_S = false;
         if (keycode == Input.Keys.A) isHeldDown_A = false;
@@ -135,11 +151,11 @@ public class UserInput implements InputProcessor
     }
 
 
-
-
     @Override
     public boolean scrolled(float amountX, float amountY)
     {
+        if(super.scrolled(amountX,amountY))return true;
+
         if (amountY > 0)
         {
             cam.zoom += 0.1;
@@ -154,32 +170,4 @@ public class UserInput implements InputProcessor
         return true;
     }
 
-    //region notInUse
-
-    @Override
-    public boolean keyTyped(char character)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button)
-    {
-        return false;
-    }
-
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY)
-    {
-        return false;
-    }
-
-
-
-
-    //endregion notInUse
-
-
-    //endregion functions
 }

@@ -1,15 +1,9 @@
 package com.mygdx.game.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Exceptions.InvalidVector2IntLimException;
-import com.mygdx.game.ToBeRemoved.InvalidVector2Int1024Exception;
-import com.mygdx.game.ToBeRemoved.InvalidVector2Int32Exception;
-
-import com.mygdx.game.Vector.Vector2Int;
-import com.mygdx.game.ToBeRemoved.Vector2Int1024;
-import com.mygdx.game.ToBeRemoved.Vector2Int32;
-import com.mygdx.game.Vector.Vector2IntLim;
-
+import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
+import com.mygdx.game.tools.vector.Vector2Int;
+import com.mygdx.game.tools.vector.Vector2IntLim;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
@@ -29,12 +23,12 @@ public class Map
 
     public void add(Tile t, Vector2IntLim targetCords) throws InvalidVector2IntLimException
     {
-
+        System.out.println(targetCords.getX()+"      "+ targetCords.getY());
         //get chunk coordinates
 
         Vector2IntLim chunk = new Vector2IntLim(1024 ,targetCords.getX() - (targetCords.getX() % 1024),targetCords.getY() - (targetCords.getY() % 1024));
-       // System.out.println("1:   "+targetCords.getX()+"    "+targetCords.getY());
-      //  System.out.println("2:   "+chunk.getX()+"    "+chunk.getY());
+        //System.out.println("1:   "+targetCords.getX()+"    "+targetCords.getY());
+        //System.out.println("2:   "+chunk.getX()+"    "+chunk.getY());
         if(targetCords.getX()<0)
         {
             chunk.setX(chunk.getX()-1024);
@@ -132,6 +126,7 @@ public class Map
             arrayIndex.setY(-arrayIndex.getY());
             arrayIndex.setY(arrayIndex.getY()+31);
         }
+
 
         mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2IntLim(1,arrayIndex.getX(),arrayIndex.getY()));
     }

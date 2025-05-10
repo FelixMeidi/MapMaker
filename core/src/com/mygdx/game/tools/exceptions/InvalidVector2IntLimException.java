@@ -1,4 +1,4 @@
-package com.mygdx.game.Exceptions;
+package com.mygdx.game.tools.exceptions;
 
 public class InvalidVector2IntLimException extends CustomException
 {

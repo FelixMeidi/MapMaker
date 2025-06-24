@@ -3,9 +3,13 @@ package com.mygdx.game.worldbuilding;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
-import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.map.Map;
+import com.mygdx.game.tools.vector.Vector2Int;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.w3c.dom.Text;
 
 import javax.swing.*;
@@ -22,10 +26,22 @@ public class Project
         maps = new HashSet<Map>();
     }
 
+
+
+    @Getter
+    @Setter
     public String name = "";
     private Set<Map> maps;
+    @Getter
     public Set<TextureRegion> usedTextureRegions;
+
+    @Getter
+    @Setter
     private String path = "";
+
+
+
+
 
     public void addMap(Map map)
     {
@@ -33,59 +49,17 @@ public class Project
         map.setProject(this);
     }
 
+
+
+
+
     public void addUsedTextureRegion(TextureRegion tx)
     {
         usedTextureRegions.add(tx);
     }
 
-    public void save()
-    {
-        if(name.isEmpty())name=getName();
-        if(path.isEmpty())path=getPath();
 
-        Iterator<TextureRegion> iterator = usedTextureRegions.iterator();
-        Integer counter = 0;
-        while(iterator.hasNext())
-        {
-            new File(path+"/"+name+"/textures/"+counter);
-            TextureData textureData = iterator.next().getTexture().getTextureData();
-            textureData.prepare();
-            PixmapIO.writePNG(new FileHandle(path+"/"+name+"/textures/"+counter+".png"), textureData.consumePixmap());
-        }
-    }
 
-    private String getName()
-    {
-        do
-        {
-            name = JOptionPane.showInputDialog(null,"Input Project Title...");
-        }
-        while (name.isEmpty());
-        return name;
-    }
 
-    private String getPath()
-    {
-        String path = "";
-        try
-        {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        }
-        catch (Exception e)
-        {
-            System.out.println("fuck, well whatever");
-        }
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Select MapMaker Path");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.setAcceptAllFileFilterUsed(false);
 
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-        {
-            path = chooser.getSelectedFile().getAbsolutePath();
-            new File(path+"/"+name).mkdirs();
-            new File(path+"/"+name+"/textures").mkdirs();
-        }
-        return path;
-    }
 }

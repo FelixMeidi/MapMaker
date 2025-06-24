@@ -6,57 +6,42 @@ import com.mygdx.game.tools.vector.Vector2IntLim;
 
 public class Chunk
 {
-
-
-
-    //region init
-
-    protected Chunk()
+    public Chunk()
     {
         tiles = new Tile[32][32];
     }
 
-    //endregion init
 
 
 
 
 
-    //region members
 
-    private Tile[][] tiles;
-
-    //endregion members
+    private final Tile[][] tiles;
 
 
 
 
 
-    //region functions
+
 
     public void addTile(Tile t, Vector2IntLim v2)
     {
         tiles[v2.getX()][v2.getY()] = t;
     }
 
-
     public void draw(SpriteBatch batch, Vector2IntLim offset)
     {
-        TextureRegion r;
         for (int c1 = 0; c1 < tiles.length; c1++)
         {
             for (int c2 = 0; c2 < tiles.length; c2++)
             {
                 if(tiles[c1][c2]!=null)
                 {
-                    r = tiles[c1][c2].getTextureRegion();
-                    batch.draw(r, offset.getX() + (c1*32), offset.getY() + (c2*32), r.getRegionWidth(), r.getRegionHeight());
+                    tiles[c1][c2].draw(batch,offset,c1,c2);
                 }
             }
         }
 
     }
-
-
-    //endregion functions
 }

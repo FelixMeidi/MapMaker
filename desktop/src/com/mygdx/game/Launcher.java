@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 public class Launcher
 {
-    private static Lwjgl3Application app;
     public static void main(String[] arg)
     {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -13,6 +12,6 @@ public class Launcher
         config.setTitle("MapMaker32");
         config.setWindowedMode(1000, 600);
 
-        app = new Lwjgl3Application(new Program(), config);
+        Lwjgl3Application app = new Lwjgl3Application(new Program(), config);
     }
 }

@@ -10,17 +10,27 @@ import com.mygdx.game.worldbuilding.Project;
 import com.mygdx.game.tools.exceptions.ExceptionHandler;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.map.Map;
-import com.mygdx.game.tools.textures.TextureLoader;
+import com.mygdx.game.tools.TextureLoader;
 import com.mygdx.game.worldbuilding.UserInput;
 
 public class EditorScreen implements Screen
 {
+
+
+
+
+
+
     private UserInput userInput;
     private SpriteBatch batch;
     private OrthographicCamera cam;
-
     private Project project;
     private Map map;
+
+
+
+
+
 
     @Override
     public void show()
@@ -35,6 +45,12 @@ public class EditorScreen implements Screen
         userInput = new UserInput(cam, map);
         Gdx.input.setInputProcessor(userInput);
     }
+
+
+
+
+
+
 
     @Override
     public void render(float delta)
@@ -54,6 +70,12 @@ public class EditorScreen implements Screen
         cam.update();
         userInput.update();
     }
+
+
+
+
+
+
 
     //region not in use
 

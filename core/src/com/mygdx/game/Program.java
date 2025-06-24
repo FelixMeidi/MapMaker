@@ -5,6 +5,8 @@ import com.mygdx.game.screens.EditorScreen;
 import com.mygdx.game.screens.MainMenuScreen;
 import jdk.tools.jmod.Main;
 
+import javax.swing.*;
+
 public class Program extends Game
 {
     @Override

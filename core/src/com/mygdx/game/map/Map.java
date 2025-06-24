@@ -1,16 +1,15 @@
 package com.mygdx.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Program;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.tools.vector.Vector2Int;
 import com.mygdx.game.tools.vector.Vector2IntLim;
 import com.mygdx.game.worldbuilding.Project;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
-@XmlRootElement
 public class Map
 {
     public Map()
@@ -19,20 +18,26 @@ public class Map
         anchor = new Vector2IntLim(1024);
     }
 
+
+
+
+
+
     //outer: x, inner: y
     private final ArrayList<ArrayList<Chunk>> mapChunkLists2D;
     private Vector2IntLim anchor;
-    private Project project;
-    public final int chunkSize = 1024;
 
-    public void setProject(Project project)
-    {
-        this.project = project;
-    }
-    public Project getProject()
-    {
-        return project;
-    }
+
+
+
+
+    @Getter
+    @Setter
+    private Project project;
+
+
+
+
 
     public void add(Tile t, Vector2IntLim targetCords) throws InvalidVector2IntLimException
     {
@@ -121,7 +126,27 @@ public class Map
         }
         mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2IntLim(1,arrayIndex.getX(),arrayIndex.getY()));
         project.addUsedTextureRegion(t.getTextureRegion());
+
     }
+
+    public void draw(SpriteBatch batch) throws InvalidVector2IntLimException
+    {
+        for(int c1 = 0; c1 < mapChunkLists2D.size(); c1++)
+        {
+            for(int c2 = 0; c2 < mapChunkLists2D.get(c1).size(); c2++)
+            {
+                mapChunkLists2D.get(c1).get(c2).draw(batch,anchor.add(new Vector2IntLim(32,c1*1024,c2*1024)));
+            }
+        }
+    }
+
+
+
+
+
+
+
+
     private void changeAnchor(Vector2IntLim offsetVector) throws InvalidVector2IntLimException
     {
         Vector2IntLim indexOffset = offsetVector.divideByLim();
@@ -139,14 +164,5 @@ public class Map
         }
         anchor = anchor.add(offsetVector);
     }
-    public void draw(SpriteBatch batch) throws InvalidVector2IntLimException
-    {
-        for(int c1 = 0; c1 < mapChunkLists2D.size(); c1++)
-        {
-            for(int c2 = 0; c2 < mapChunkLists2D.get(c1).size(); c2++)
-            {
-                mapChunkLists2D.get(c1).get(c2).draw(batch,anchor.add(new Vector2IntLim(32,c1*1024,c2*1024)));
-            }
-        }
-    }
+
 }

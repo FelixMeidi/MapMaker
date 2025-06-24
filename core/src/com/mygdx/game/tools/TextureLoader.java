@@ -1,4 +1,4 @@
-package com.mygdx.game.tools.textures;
+package com.mygdx.game.tools;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +15,24 @@ public abstract class TextureLoader
         List<TextureRegion> textureList = new ArrayList<>();
 
         Texture spriteSheet32x32 = new Texture("assets/SpriteSheet32x32.png");
+        int width = spriteSheet32x32.getWidth()/32;
+        int height = spriteSheet32x32.getHeight()/32;
+        for (int cHeight = 0; cHeight < height; cHeight++)
+        {
+            for (int cWidth = 0; cWidth < width; cWidth++)
+            {
+                textureList.add(new TextureRegion(spriteSheet32x32,cWidth*32,cHeight*32,32,32));
+            }
+        }
+        textures = new TextureRegion[textureList.size()];
+        textures = textureList.toArray(textures);
+    }
+
+    public static void loadTextures(String path)
+    {
+        List<TextureRegion> textureList = new ArrayList<>();
+
+        Texture spriteSheet32x32 = new Texture(path);
         int width = spriteSheet32x32.getWidth()/32;
         int height = spriteSheet32x32.getHeight()/32;
         for (int cHeight = 0; cHeight < height; cHeight++)

@@ -13,6 +13,7 @@ import com.kotcrab.vis.ui.VisUI;
 
 public class MainMenuScreen implements Screen
 {
+
     public MainMenuScreen(Game master,Integer sizeX, Integer sizeY)
     {
         this.sizeX = sizeX;
@@ -20,6 +21,12 @@ public class MainMenuScreen implements Screen
         this.master = master;
         stage = new Stage();
     }
+
+
+
+
+
+
 
     private final Game master;
     private final Integer sizeX;
@@ -31,10 +38,16 @@ public class MainMenuScreen implements Screen
     private ClickListener clickOpenProject;
     private ClickListener clickExit;
 
+
+
+
+
+
+
+
     @Override
     public void show()
     {
-        //init
         VisUI.load();
         skin = VisUI.getSkin();
         window = new Window("Main Menu",skin);
@@ -43,6 +56,12 @@ public class MainMenuScreen implements Screen
         initClickListeners();
         buildUI();
     }
+
+
+
+
+
+
 
     // region not in use
 
@@ -83,6 +102,11 @@ public class MainMenuScreen implements Screen
     }
 
     //endregion not in use
+
+
+
+
+
 
 
 

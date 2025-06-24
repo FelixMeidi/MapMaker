@@ -2,31 +2,43 @@ package com.mygdx.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.tools.textures.TextureLoader;
+import com.mygdx.game.tools.TextureLoader;
+import com.mygdx.game.tools.vector.Vector2IntLim;
+import lombok.Getter;
 
-public class Tile extends Image
+public class Tile
 {
     public Tile(int texturesIndex)
     {
         this.texturesIndex = texturesIndex;
     }
 
-    private int texturesIndex;
 
-    public int getTexturesIndex()
-    {
-        return texturesIndex;
-    }
+
+
+    @Getter
+    private final int texturesIndex;
+
+
+
+
+
+
+
     public TextureRegion getTextureRegion()
     {
         return TextureLoader.get(getTexturesIndex());
     }
 
-    public void draw(SpriteBatch spritebatch, Integer posX, Integer posY)
+
+
+
+
+
+
+    public void draw(SpriteBatch spritebatch, Vector2IntLim offset, Integer x, Integer y)
     {
-
+        TextureRegion r = getTextureRegion();
+        spritebatch.draw(r, offset.getX() + (x*32), offset.getY() + (y*32), r.getRegionWidth(), r.getRegionHeight());
     }
-
-
 }

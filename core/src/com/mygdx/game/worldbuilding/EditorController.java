@@ -1,6 +1,5 @@
 package com.mygdx.game.worldbuilding;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.map.Map;
@@ -9,6 +8,8 @@ import com.mygdx.game.tools.DataManager;
 import com.mygdx.game.tools.exceptions.ExceptionHandler;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.tools.vector.Vector2IntLim;
+
+import java.io.IOException;
 
 public class EditorController
 {
@@ -40,7 +41,15 @@ public class EditorController
 
     public void saveProject()
     {
-         DataManager.saveProject(map.getProject());
+        try
+        {
+            DataManager.saveProject(map.getProject());
+        }
+        catch (IOException ignored)
+        {
+
+        }
+
     }
 
     public void changeTextureIndex(int i)
@@ -50,7 +59,7 @@ public class EditorController
 
     public void addToCamZoom(double z)
     {
-        cam.zoom += z;
+        cam.zoom += (float)z;
     }
 
     public double getZoom()

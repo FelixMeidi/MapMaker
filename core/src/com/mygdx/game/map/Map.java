@@ -1,14 +1,15 @@
 package com.mygdx.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.tools.DataManager;
 import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
 import com.mygdx.game.tools.vector.Vector2Int;
 import com.mygdx.game.tools.vector.Vector2IntLim;
 import com.mygdx.game.worldbuilding.Project;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Map
 {
@@ -16,18 +17,33 @@ public class Map
     {
         mapChunkLists2D = new ArrayList<>();
         anchor = new Vector2IntLim(1024);
+        base = 32;
+        usedTextureIndexes = new ArrayList<>();
+        usedTextureIndexesAmounts = new ArrayList<>();
     }
 
 
 
+    @Setter
+    private String name;
+    public String getName()
+    {
+        if(name==null||name.isEmpty()) name = DataManager.findName("Input Map name...");
+        return name;
+    }
 
-
-
+    @Getter
     //outer: x, inner: y
     private final ArrayList<ArrayList<Chunk>> mapChunkLists2D;
+    @Getter
     private Vector2IntLim anchor;
+    @Getter
+    private final Integer base;
 
-
+    @Getter
+    public List<Integer> usedTextureIndexes;
+    @Getter
+    public List<Integer> usedTextureIndexesAmounts;
 
 
 
@@ -51,7 +67,7 @@ public class Map
             chunk.setY(chunk.getY()-1024);
         }
 
-        Vector2IntLim offsetVector = null;
+        Vector2IntLim offsetVector;
         try
         {
             offsetVector = new Vector2IntLim(1024);
@@ -79,24 +95,16 @@ public class Map
         Vector2IntLim realChunkIndex = anchorIndex.add(chunk.divideByLim());
         for(int c1 = 0; c1 <= realChunkIndex.getX(); c1++)
         {
-            try
-            {
-                mapChunkLists2D.get(c1);
-            }
-            catch(Exception e)
+            if(mapChunkLists2D.size()<=c1)
             {
                 mapChunkLists2D.add(new ArrayList<Chunk>());
             }
         }
         for(int c1 = 0; c1 <= realChunkIndex.getY(); c1++)
         {
-            try
+            if(mapChunkLists2D.get(realChunkIndex.getX()).size()<=c1)
             {
-                mapChunkLists2D.get(realChunkIndex.getX()).get(c1);
-            }
-            catch(Exception e)
-            {
-                mapChunkLists2D.get(realChunkIndex.getX()).add(c1, new Chunk());
+                mapChunkLists2D.get(realChunkIndex.getX()).add(new Chunk());
             }
         }
         //this fucking error
@@ -124,10 +132,48 @@ public class Map
             arrayIndex.setY(-arrayIndex.getY());
             arrayIndex.setY(arrayIndex.getY()+31);
         }
-        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2IntLim(1,arrayIndex.getX(),arrayIndex.getY()));
-        project.addUsedTextureRegion(t.getTextureRegion());
+        Tile existingTile = mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).getTiles()[arrayIndex.getX()][arrayIndex.getY()];
 
+        mapChunkLists2D.get(realChunkIndex.getX()).get(realChunkIndex.getY()).addTile(t,new Vector2IntLim(1,arrayIndex.getX(),arrayIndex.getY()));
+
+        if(existingTile!=null)
+        {
+            for (int c = 0; c < usedTextureIndexes.size(); c++)
+            {
+                if(usedTextureIndexes.get(c).equals(existingTile.getTexturesIndex()))
+                {
+                    usedTextureIndexesAmounts.set(c,usedTextureIndexesAmounts.get(c)-1);
+                    if(usedTextureIndexesAmounts.get(c)==0)
+                    {
+                        usedTextureIndexesAmounts.remove(usedTextureIndexesAmounts.get(c));
+                        usedTextureIndexes.remove(usedTextureIndexes.get(c));
+                    }
+                }
+            }
+        }
+        addTextureUse(t.getTexturesIndex());
     }
+
+
+    private void addTextureUse(Integer textureIndex)
+    {
+        boolean found = false;
+        for (int c = 0; c < usedTextureIndexes.size(); c++)
+        {
+            if(usedTextureIndexes.get(c).equals(textureIndex))
+            {
+                usedTextureIndexesAmounts.set(c,usedTextureIndexesAmounts.get(c)+1);
+                found = true;
+            }
+        }
+        if(!found)
+        {
+            usedTextureIndexes.add(textureIndex);
+            usedTextureIndexesAmounts.add(1);
+        }
+    }
+
+
 
     public void draw(SpriteBatch batch) throws InvalidVector2IntLimException
     {
@@ -142,15 +188,9 @@ public class Map
 
 
 
-
-
-
-
-
     private void changeAnchor(Vector2IntLim offsetVector) throws InvalidVector2IntLimException
     {
         Vector2IntLim indexOffset = offsetVector.divideByLim();
-        System.out.println(indexOffset.getX()+"    "+indexOffset.getY());
         for(int c1 = 0;c1 < mapChunkLists2D.size();c1++)
         {
             for(int c2 = 0;c2> indexOffset.getY();c2--)

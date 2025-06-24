@@ -2,7 +2,6 @@ package com.mygdx.game.tools;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,33 +55,13 @@ public abstract class TextureLoader
     {
         textures[0].getTexture().dispose();
     }
-}
 
-
-
-
-
-
-
-
-
-/*
-        List<Texture> textureList = new ArrayList<Texture>();
-
-        File assets = new File(currentFolder);
-        File[] assetsList = assets.listFiles();
-        for (int c1 = 0; c1 < assetsList.length; c1++)
+    public static Integer getIndex(TextureRegion tr)
+    {
+        for (int c = 0; c < textures.length; c++)
         {
-            File currentFile = assetsList[c1];
-            if (currentFile.isFile())
-            {
-                if(currentFile.getName().endsWith(".png"))
-                {
-                    textureList.add(new Texture(currentFile.getPath()));
-                }
-            }
-            else
-            {
-                loadTexturesRecHelpMethod(currentFile.getPath().toString());
-            }
-        }*/
+            if(tr==textures[c])return c;
+        }
+        throw new RuntimeException();
+    }
+}

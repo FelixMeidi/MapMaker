@@ -1,16 +1,17 @@
 package com.mygdx.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.tools.vector.Vector2IntLim;
+import lombok.Getter;
 
+@Getter
 public class Chunk
 {
     public Chunk()
     {
         tiles = new Tile[32][32];
+        hasTiles = false;
     }
-
 
 
 
@@ -19,15 +20,18 @@ public class Chunk
 
     private final Tile[][] tiles;
 
+    private boolean hasTiles;
 
 
 
 
 
 
-    public void addTile(Tile t, Vector2IntLim v2)
+
+    public void addTile(Tile newTile, Vector2IntLim v2)
     {
-        tiles[v2.getX()][v2.getY()] = t;
+        tiles[v2.getX()][v2.getY()] = newTile;
+        hasTiles = true;
     }
 
     public void draw(SpriteBatch batch, Vector2IntLim offset)

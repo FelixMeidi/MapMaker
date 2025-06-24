@@ -1,44 +1,41 @@
 package com.mygdx.game.worldbuilding;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.map.Map;
-import com.mygdx.game.tools.vector.Vector2Int;
-import lombok.Data;
+import com.mygdx.game.tools.DataManager;
 import lombok.Getter;
 import lombok.Setter;
-import org.w3c.dom.Text;
-
-import javax.swing.*;
-import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class Project
 {
     public Project()
     {
-        usedTextureRegions = new HashSet<TextureRegion>();
-        maps = new HashSet<Map>();
+
+        maps = new HashSet<>();
     }
 
 
 
-    @Getter
     @Setter
-    public String name = "";
-    private Set<Map> maps;
-    @Getter
-    public Set<TextureRegion> usedTextureRegions;
+    private String name = "";
+    public String getName()
+    {
+        if(name.isEmpty())name = DataManager.findName("Input Project title...");
+        return name;
+    }
 
     @Getter
+    private final Set<Map> maps;
+
+
+
     @Setter
     private String path = "";
-
+    public String getPath()
+    {
+        if(path.isEmpty())path = DataManager.findPath();
+        return path;
+    }
 
 
 
@@ -48,18 +45,4 @@ public class Project
         maps.add(map);
         map.setProject(this);
     }
-
-
-
-
-
-    public void addUsedTextureRegion(TextureRegion tx)
-    {
-        usedTextureRegions.add(tx);
-    }
-
-
-
-
-
 }

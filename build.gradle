@@ -71,3 +71,19 @@ project(":core") {
         annotationProcessor("org.projectlombok:lombok:1.18.38")
     }
 }
+
+project(":api") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        implementation project(":api")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
+        implementation 'com.github.FelixMeidi:MapMaker:main'
+    }
+}

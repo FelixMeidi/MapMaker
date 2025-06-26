@@ -1,4 +1,4 @@
-package com.mygdx.game.tools;
+package de.meidi.game.tools;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

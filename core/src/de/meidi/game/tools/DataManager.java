@@ -1,14 +1,14 @@
-package com.mygdx.game.tools;
+package de.meidi.game.tools;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.map.Chunk;
-import com.mygdx.game.map.Map;
-import com.mygdx.game.map.Tile;
-import com.mygdx.game.tools.vector.Vector2IntLim;
-import com.mygdx.game.worldbuilding.Project;
+import de.meidi.game.map.Chunk;
+import de.meidi.game.map.Map;
+import de.meidi.game.map.Tile;
+import de.meidi.game.tools.vector.Vector2IntLim;
+import de.meidi.game.worldbuilding.Project;
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -51,13 +51,9 @@ public abstract class DataManager
                     {
                         usedTextureIndexesAmounts.add(0);
                     }
-                    usedTextureIndexesAmounts.set(
-                            c,
-                            usedTextureIndexesAmounts.get(c) + m.usedTextureIndexesAmounts.get(c)
-                                                 );
+                    usedTextureIndexesAmounts.set(c,usedTextureIndexesAmounts.get(c) + m.usedTextureIndexesAmounts.get(c));
                 }
             }
-
 
             for (Integer usedTexturesIndex : usedTexturesIndexes)
             {
@@ -190,7 +186,7 @@ public abstract class DataManager
     }
 
     public void loadProject()
-    {
+    {/*
         String path = findPath();
         File f = new File(path);
         String name = f.getName();
@@ -198,7 +194,7 @@ public abstract class DataManager
         for(String fileName : files)
         {
             //if(fileName.equals())
-        }
+        }*/
     }
 
     public static String findName(String text)

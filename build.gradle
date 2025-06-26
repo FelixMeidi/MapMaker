@@ -1,24 +1,22 @@
 buildscript {
-
-
-
     repositories {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
-
-
     dependencies {
+        // No buildscript dependencies needed for this basic library setup
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
 
-    version = '1.0'
+    version = '1.0.0' // Versioning for your library
+    group = 'com.example.mapmaker' // CHANGE THIS to your domain-based groupId
+
     ext {
         appName = "MapMaker"
         gdxVersion = '1.11.0'
@@ -30,7 +28,6 @@ allprojects {
         visuiVersion = '1.5.1'
     }
 
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -38,30 +35,20 @@ allprojects {
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://jitpack.io" }
-    }
-}
-
-project(":desktop") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
-        
+        maven { url "https://jitpack.io" } // Keep for Git-based imports
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
+    apply plugin: "maven-publish" // Enables publishing if needed
 
+    java {
+        withSourcesJar()
+    }
 
     dependencies {
-        implementation 'com.sun.xml.bind:jaxb-impl:2.3.3'                // DAS DA
+        implementation 'com.sun.xml.bind:jaxb-impl:2.3.3'
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
@@ -69,5 +56,28 @@ project(":core") {
         api "com.kotcrab.vis:vis-ui:$visuiVersion"
         compileOnly("org.projectlombok:lombok:1.18.38")
         annotationProcessor("org.projectlombok:lombok:1.18.38")
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                groupId = project.group
+                artifactId = "mapmaker-core"
+                version = project.version
+            }
+        }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java-library"
+
+    dependencies {
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
     }
 }

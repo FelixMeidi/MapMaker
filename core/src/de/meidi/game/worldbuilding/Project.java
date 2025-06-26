@@ -1,7 +1,7 @@
-package com.mygdx.game.worldbuilding;
+package de.meidi.game.worldbuilding;
 
-import com.mygdx.game.map.Map;
-import com.mygdx.game.tools.DataManager;
+import de.meidi.game.map.Map;
+import de.meidi.game.tools.DataManager;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.*;

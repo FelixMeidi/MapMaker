@@ -1,6 +1,6 @@
-package com.mygdx.game.tools.vector;
+package de.meidi.game.tools.vector;
 
-import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
+import de.meidi.game.tools.exceptions.InvalidVector2IntLimException;
 
 public class Vector2IntLim
 {

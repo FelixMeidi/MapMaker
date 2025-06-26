@@ -1,11 +1,7 @@
-package com.mygdx.game;
+package de.meidi.game;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.game.screens.EditorScreen;
-import com.mygdx.game.screens.MainMenuScreen;
-import jdk.tools.jmod.Main;
-
-import javax.swing.*;
+import de.meidi.game.screens.MainMenuScreen;
 
 public class Program extends Game
 {

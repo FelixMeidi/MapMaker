@@ -1,7 +1,7 @@
-package com.mygdx.game.map;
+package de.meidi.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.tools.vector.Vector2IntLim;
+import de.meidi.game.tools.vector.Vector2IntLim;
 import lombok.Getter;
 
 @Getter

@@ -1,11 +1,11 @@
-package com.mygdx.game.map;
+package de.meidi.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.tools.DataManager;
-import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
-import com.mygdx.game.tools.vector.Vector2Int;
-import com.mygdx.game.tools.vector.Vector2IntLim;
-import com.mygdx.game.worldbuilding.Project;
+import de.meidi.game.tools.DataManager;
+import de.meidi.game.tools.exceptions.InvalidVector2IntLimException;
+import de.meidi.game.tools.vector.Vector2Int;
+import de.meidi.game.tools.vector.Vector2IntLim;
+import de.meidi.game.worldbuilding.Project;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;

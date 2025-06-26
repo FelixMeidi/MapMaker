@@ -1,10 +1,9 @@
-package com.mygdx.game.worldbuilding;
+package de.meidi.game.worldbuilding;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.map.Map;
+import de.meidi.game.map.Map;
 
 public class UserInput implements InputProcessor
 {

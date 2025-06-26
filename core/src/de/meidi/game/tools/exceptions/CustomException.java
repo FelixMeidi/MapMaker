@@ -1,4 +1,4 @@
-package com.mygdx.game.tools.exceptions;
+package de.meidi.game.tools.exceptions;
 
 public abstract class CustomException extends Exception
 {

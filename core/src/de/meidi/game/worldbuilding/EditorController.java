@@ -1,13 +1,13 @@
-package com.mygdx.game.worldbuilding;
+package de.meidi.game.worldbuilding;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.map.Map;
-import com.mygdx.game.map.Tile;
-import com.mygdx.game.tools.DataManager;
-import com.mygdx.game.tools.exceptions.ExceptionHandler;
-import com.mygdx.game.tools.exceptions.InvalidVector2IntLimException;
-import com.mygdx.game.tools.vector.Vector2IntLim;
+import de.meidi.game.map.Map;
+import de.meidi.game.map.Tile;
+import de.meidi.game.tools.DataManager;
+import de.meidi.game.tools.exceptions.ExceptionHandler;
+import de.meidi.game.tools.exceptions.InvalidVector2IntLimException;
+import de.meidi.game.tools.vector.Vector2IntLim;
 
 import java.io.IOException;
 

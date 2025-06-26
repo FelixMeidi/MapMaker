@@ -1,4 +1,4 @@
-package com.mygdx.game.tools.vector;
+package de.meidi.game.tools.vector;
 
 public class Vector2Int
 {

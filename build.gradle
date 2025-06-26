@@ -32,13 +32,6 @@ allprojects {
 
 
     repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://jitpack.io" }
     }
 }
 
@@ -83,6 +76,6 @@ project(":api") {
         api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
         compileOnly("org.projectlombok:lombok:1.18.38")
         annotationProcessor("org.projectlombok:lombok:1.18.38")
-        implementation 'com.github.FelixMeidi:MapMaker:main'
+        implementation 'com.github.FelixMeidi:MapMaker:-SNAPSHOT'
     }
 }

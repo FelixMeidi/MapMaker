@@ -1,4 +1,3 @@
-rootProject.name = 'mapmaker'
 include 'core', 'desktop'
 include 'api'
 

@@ -36,7 +36,7 @@ public class EditorScreen implements Screen
     public void show()
     {
         project = new Project();
-        TextureLoader.loadTextures();
+        TextureLoader.loadTexturesFromSheet();
         batch = new SpriteBatch();
         cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         map = new Map();

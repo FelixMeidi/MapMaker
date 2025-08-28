@@ -1,7 +1,7 @@
 package de.meidi.game.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import de.meidi.game.tools.DataManager;
+import de.meidi.game.tools.ProjectManager;
 import de.meidi.game.tools.exceptions.InvalidVector2IntLimException;
 import de.meidi.game.tools.vector.Vector2Int;
 import de.meidi.game.tools.vector.Vector2IntLim;
@@ -28,7 +28,7 @@ public class Map
     private String name;
     public String getName()
     {
-        if(name==null||name.isEmpty()) name = DataManager.findName("Input Map name...");
+        if(name==null||name.isEmpty()) name = ProjectManager.findName("Input Map name...");
         return name;
     }
 

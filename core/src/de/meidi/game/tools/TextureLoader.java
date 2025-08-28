@@ -9,7 +9,7 @@ public abstract class TextureLoader
 {
     private static TextureRegion[] textures;
 
-    public static void loadTextures()
+    public static void loadTexturesFromSheet()
     {
         List<TextureRegion> textureList = new ArrayList<>();
 
@@ -27,6 +27,11 @@ public abstract class TextureLoader
         textures = textureList.toArray(textures);
     }
 
+    public static void saveTexturesToSheet()
+    {
+
+    }
+/*
     public static void loadTextures(String path)
     {
         List<TextureRegion> textureList = new ArrayList<>();
@@ -43,7 +48,7 @@ public abstract class TextureLoader
         }
         textures = new TextureRegion[textureList.size()];
         textures = textureList.toArray(textures);
-    }
+    }*/
 
     public static TextureRegion get(int index)
     {

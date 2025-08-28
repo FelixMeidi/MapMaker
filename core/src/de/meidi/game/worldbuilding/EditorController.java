@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import de.meidi.game.map.Map;
 import de.meidi.game.map.Tile;
-import de.meidi.game.tools.DataManager;
+import de.meidi.game.tools.ProjectManager;
 import de.meidi.game.tools.exceptions.ExceptionHandler;
 import de.meidi.game.tools.exceptions.InvalidVector2IntLimException;
 import de.meidi.game.tools.vector.Vector2IntLim;
@@ -43,7 +43,7 @@ public class EditorController
     {
         try
         {
-            DataManager.saveProject(map.getProject());
+            ProjectManager.saveProject(map.getProject());
         }
         catch (IOException ignored)
         {
